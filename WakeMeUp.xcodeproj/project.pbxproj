@@ -17,6 +17,18 @@
 		B68799B82B026605000E6768 /* WakeMeUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68799B72B026605000E6768 /* WakeMeUpTests.swift */; };
 		B68799C22B026605000E6768 /* WakeMeUpUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68799C12B026605000E6768 /* WakeMeUpUITests.swift */; };
 		B68799C42B026605000E6768 /* WakeMeUpUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68799C32B026605000E6768 /* WakeMeUpUITestsLaunchTests.swift */; };
+		B68799D32B026A56000E6768 /* PlacemarksVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68799D22B026A56000E6768 /* PlacemarksVC.swift */; };
+		B68799D42B026A56000E6768 /* PlacemarksVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68799D22B026A56000E6768 /* PlacemarksVC.swift */; };
+		B68799D52B026A56000E6768 /* PlacemarksVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68799D22B026A56000E6768 /* PlacemarksVC.swift */; };
+		B68799D72B026A7F000E6768 /* MapsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68799D62B026A7F000E6768 /* MapsVC.swift */; };
+		B68799D82B026A7F000E6768 /* MapsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68799D62B026A7F000E6768 /* MapsVC.swift */; };
+		B68799D92B026A7F000E6768 /* MapsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68799D62B026A7F000E6768 /* MapsVC.swift */; };
+		B68799DB2B026AAC000E6768 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68799DA2B026AAC000E6768 /* SettingsVC.swift */; };
+		B68799DC2B026AAC000E6768 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68799DA2B026AAC000E6768 /* SettingsVC.swift */; };
+		B68799DD2B026AAC000E6768 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68799DA2B026AAC000E6768 /* SettingsVC.swift */; };
+		B68799DF2B038616000E6768 /* StartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68799DE2B038616000E6768 /* StartVC.swift */; };
+		B68799E02B038616000E6768 /* StartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68799DE2B038616000E6768 /* StartVC.swift */; };
+		B68799E12B038616000E6768 /* StartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68799DE2B038616000E6768 /* StartVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +63,10 @@
 		B68799BD2B026605000E6768 /* WakeMeUpUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WakeMeUpUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B68799C12B026605000E6768 /* WakeMeUpUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WakeMeUpUITests.swift; sourceTree = "<group>"; };
 		B68799C32B026605000E6768 /* WakeMeUpUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WakeMeUpUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B68799D22B026A56000E6768 /* PlacemarksVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacemarksVC.swift; sourceTree = "<group>"; };
+		B68799D62B026A7F000E6768 /* MapsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsVC.swift; sourceTree = "<group>"; };
+		B68799DA2B026AAC000E6768 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		B68799DE2B038616000E6768 /* StartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +120,10 @@
 				B687999D2B026604000E6768 /* AppDelegate.swift */,
 				B687999F2B026604000E6768 /* SceneDelegate.swift */,
 				B68799A12B026604000E6768 /* ViewController.swift */,
+				B68799D22B026A56000E6768 /* PlacemarksVC.swift */,
+				B68799D62B026A7F000E6768 /* MapsVC.swift */,
+				B68799DA2B026AAC000E6768 /* SettingsVC.swift */,
+				B68799DE2B038616000E6768 /* StartVC.swift */,
 				B68799A32B026604000E6768 /* Main.storyboard */,
 				B68799A92B026605000E6768 /* Assets.xcassets */,
 				B68799AB2B026605000E6768 /* LaunchScreen.storyboard */,
@@ -264,7 +284,11 @@
 				B68799A82B026604000E6768 /* WakeMeUp.xcdatamodeld in Sources */,
 				B68799A22B026604000E6768 /* ViewController.swift in Sources */,
 				B687999E2B026604000E6768 /* AppDelegate.swift in Sources */,
+				B68799D32B026A56000E6768 /* PlacemarksVC.swift in Sources */,
 				B68799A02B026604000E6768 /* SceneDelegate.swift in Sources */,
+				B68799D72B026A7F000E6768 /* MapsVC.swift in Sources */,
+				B68799DB2B026AAC000E6768 /* SettingsVC.swift in Sources */,
+				B68799DF2B038616000E6768 /* StartVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,7 +296,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B68799E02B038616000E6768 /* StartVC.swift in Sources */,
 				B68799B82B026605000E6768 /* WakeMeUpTests.swift in Sources */,
+				B68799DC2B026AAC000E6768 /* SettingsVC.swift in Sources */,
+				B68799D42B026A56000E6768 /* PlacemarksVC.swift in Sources */,
+				B68799D82B026A7F000E6768 /* MapsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,7 +309,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				B68799C42B026605000E6768 /* WakeMeUpUITestsLaunchTests.swift in Sources */,
+				B68799D92B026A7F000E6768 /* MapsVC.swift in Sources */,
 				B68799C22B026605000E6768 /* WakeMeUpUITests.swift in Sources */,
+				B68799D52B026A56000E6768 /* PlacemarksVC.swift in Sources */,
+				B68799DD2B026AAC000E6768 /* SettingsVC.swift in Sources */,
+				B68799E12B038616000E6768 /* StartVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
