@@ -62,10 +62,10 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         let destinationLocation = CLLocation(latitude: annotationLatitude2, longitude: annotationLongitude2)
         let distance = calculateDistance(from: userLocation, to: destinationLocation)
         let selectedDistanceDouble = Double(selectedDistanceArray2.last!)
-        print(selectedDistanceDouble,Double(selectedDistanceArray2.last!))
-        print("Distance: \(distance), Selected Distance: \(selectedDistanceDouble)")
-        print(selectedOption)
-            //let distance = Int(calculateDistance(from: userLocation, to: destinationLocation))
+//        print(selectedDistanceDouble,Double(selectedDistanceArray2.last!))
+//        print("Distance: \(distance), Selected Distance: \(selectedDistanceDouble)")
+//        print(selectedOption)
+//            let distance = Int(calculateDistance(from: userLocation, to: destinationLocation))
             if distance <= selectedDistanceDouble {
                 print(selectedOption)
                 if selectedOption != "" {
@@ -83,7 +83,7 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                         alarmPlaying = true
                         playSound()
                         vibratePhone()
-                        print("alarmın olmuş olması lazım")
+                        //print("alarmın olmuş olması lazım")
                     }
                 } else {
                     makeAlert(title: "Hata", message: "Selected Option BOSSSSSS")
@@ -102,8 +102,8 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         if let lastSelectedDistance = selectedDistanceArray2.last, let lastSelectedOption = selectedOptionArray2.last {
             selectedOption = lastSelectedOption
             selectedDistance = lastSelectedDistance
-            print("Selected Option in previewAlert:", selectedOption)
-            print("Selected Distance in previewAlert:", selectedDistance)
+//            print("Selected Option in previewAlert:", selectedOption)
+//            print("Selected Distance in previewAlert:", selectedDistance)
             let alertController = UIAlertController(title: "Bilgilendirme", message: "Seçtiğiniz Mesafe: \(lastSelectedDistance)m\n Seçtiğiniz Alarm Tipi: \(lastSelectedOption)\n Değiştirmek için ayarlara gidiniz.", preferredStyle: UIAlertController.Style.alert)
             let okAction = UIAlertAction(title: "Tamam", style: UIAlertAction.Style.default) {_ in
                     //
@@ -123,7 +123,7 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     @IBAction func stopButtonClicked(_ sender: Any) {
-        performSegue(withIdentifier: "StartVCToPlacemarksVC", sender: nil)
+        self.dismiss(animated: true)
     }
     
     
@@ -167,8 +167,10 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     func vibratePhone(){
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
+    
     func playSound(){
-        AudioServicesPlaySystemSound(SystemSoundID(1000))
+        AudioServicesPlayAlertSound(SystemSoundID(1000))
+        //AudioServicesPlaySystemSound(SystemSoundID(1000))
         //if let soundURL = Bundle.main.url(forResource: "sound", withExtension: "mp3") {
           //  var sound: SystemSoundID = 0
             //AudioServicesCreateSystemSoundID(soundURL as CFURL, &sound)

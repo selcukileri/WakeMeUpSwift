@@ -481,6 +481,8 @@
 				DEVELOPMENT_TEAM = 4S74JS2879;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WakeMeUp/Info.plist;
+				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Gideceğin yere kalan mesafeni öğrenmek için";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -509,6 +511,8 @@
 				DEVELOPMENT_TEAM = 4S74JS2879;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WakeMeUp/Info.plist;
+				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Gideceğin yere kalan mesafeni öğrenmek için";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

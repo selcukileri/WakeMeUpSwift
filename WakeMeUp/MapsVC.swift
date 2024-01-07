@@ -193,6 +193,7 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
             let region = MKCoordinateRegion(center: location, span: span)
             mapView.setRegion(region, animated: true)
+            locationManager.stopUpdatingLocation()
         } else {
             saveButton.isHidden = true
             startButton.isHidden = false
