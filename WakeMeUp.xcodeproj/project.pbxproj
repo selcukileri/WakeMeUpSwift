@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B64505E92B6A71EF007E88C1 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B64505E82B6A71EF007E88C1 /* IQKeyboardManagerSwift */; };
 		B687999E2B026604000E6768 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B687999D2B026604000E6768 /* AppDelegate.swift */; };
 		B68799A02B026604000E6768 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B687999F2B026604000E6768 /* SceneDelegate.swift */; };
 		B68799A22B026604000E6768 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68799A12B026604000E6768 /* ViewController.swift */; };
@@ -74,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B64505E92B6A71EF007E88C1 /* IQKeyboardManagerSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +96,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B64505E52B6A6F96007E88C1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B68799A62B026604000E6768 /* WakeMeUp.xcdatamodeld */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B64505E62B6A6FA1007E88C1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B68799A12B026604000E6768 /* ViewController.swift */,
+				B68799D22B026A56000E6768 /* PlacemarksVC.swift */,
+				B68799D62B026A7F000E6768 /* MapsVC.swift */,
+				B68799DA2B026AAC000E6768 /* SettingsVC.swift */,
+				B68799DE2B038616000E6768 /* StartVC.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		B68799912B026604000E6768 = {
 			isa = PBXGroup;
 			children = (
@@ -119,16 +141,12 @@
 			children = (
 				B687999D2B026604000E6768 /* AppDelegate.swift */,
 				B687999F2B026604000E6768 /* SceneDelegate.swift */,
-				B68799A12B026604000E6768 /* ViewController.swift */,
-				B68799D22B026A56000E6768 /* PlacemarksVC.swift */,
-				B68799D62B026A7F000E6768 /* MapsVC.swift */,
-				B68799DA2B026AAC000E6768 /* SettingsVC.swift */,
-				B68799DE2B038616000E6768 /* StartVC.swift */,
+				B64505E62B6A6FA1007E88C1 /* Views */,
+				B64505E52B6A6F96007E88C1 /* Model */,
 				B68799A32B026604000E6768 /* Main.storyboard */,
 				B68799A92B026605000E6768 /* Assets.xcassets */,
 				B68799AB2B026605000E6768 /* LaunchScreen.storyboard */,
 				B68799AE2B026605000E6768 /* Info.plist */,
-				B68799A62B026604000E6768 /* WakeMeUp.xcdatamodeld */,
 			);
 			path = WakeMeUp;
 			sourceTree = "<group>";
@@ -166,6 +184,9 @@
 			dependencies = (
 			);
 			name = WakeMeUp;
+			packageProductDependencies = (
+				B64505E82B6A71EF007E88C1 /* IQKeyboardManagerSwift */,
+			);
 			productName = WakeMeUp;
 			productReference = B687999A2B026604000E6768 /* WakeMeUp.app */;
 			productType = "com.apple.product-type.application";
@@ -238,6 +259,9 @@
 				Base,
 			);
 			mainGroup = B68799912B026604000E6768;
+			packageReferences = (
+				B64505E72B6A71EF007E88C1 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+			);
 			productRefGroup = B687999B2B026604000E6768 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -647,6 +671,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B64505E72B6A71EF007E88C1 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B64505E82B6A71EF007E88C1 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B64505E72B6A71EF007E88C1 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		B68799A62B026604000E6768 /* WakeMeUp.xcdatamodeld */ = {
