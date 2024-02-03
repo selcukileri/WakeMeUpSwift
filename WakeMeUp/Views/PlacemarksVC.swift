@@ -11,6 +11,7 @@ import CoreData
 class PlacemarksVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
+        
     var titleArray = [String]()
     var idArray = [UUID]()
     var chosenTitle = ""
@@ -22,12 +23,16 @@ class PlacemarksVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         tableView.delegate = self
         tableView.dataSource = self
         
-        navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(addButtonClicked))
-        navigationController?.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItem.Style.plain, target: self, action: #selector(backButtonClicked))
         getData()
     }
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.addObserver(self, selector: #selector(getData), name: NSNotification.Name("newPlace"), object: nil)
+    }
+    
+    
+    @IBAction func addButtonClicked(_ sender: Any) {
+        chosenTitle = ""
+        performSegue(withIdentifier: "toMapsVC", sender: nil)
     }
     
     @objc func getData(){
@@ -56,16 +61,7 @@ class PlacemarksVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             
         
     }
-    
-    @objc func backButtonClicked() {
-        self.dismiss(animated: true)
-    }
    
-    @objc func addButtonClicked() {
-        chosenTitle = ""
-        performSegue(withIdentifier: "toMapsVC", sender: nil)
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return titleArray.count
     }

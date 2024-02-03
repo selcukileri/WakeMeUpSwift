@@ -8,6 +8,7 @@
 import UIKit
 import MapKit
 import AudioToolbox
+import AVFoundation
 
 class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
@@ -25,11 +26,15 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     var selectedOption = String()
     var isUserTrackingEnabled = true
     var alarmPlaying = false
+    var audioPlayer: AVAudioPlayer?
+    var selectedAlarmName: String = ""
+    var distanceUpdateTimer: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         previewAlert()
+        
         remainingDistanceLabel.text = "Kalan Mesafe Hesaplanıyor.."
         mapView.delegate = self
         locationManager.delegate = self
@@ -40,9 +45,19 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             mapView.setUserTrackingMode(.follow, animated: true)
         }
         checkDistance()
-        
+        distanceUpdateTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(updateDistance), userInfo: nil, repeats: true)
+        print("selectedalarmname: \(selectedAlarmName)")
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        selectedAlarmName = ""
+    }
+    
+    @objc func updateDistance(){
+        checkDistance()
+    }
+    
     private func updateRemainingDistance(){
         guard let userLocation = mapView.userLocation.location else {
             return
@@ -55,24 +70,23 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     func calculateDistance(from sourceLocation: CLLocation, to destinationLocation: CLLocation) -> CLLocationDistance{
         return sourceLocation.distance(from: destinationLocation)
     }
+    
     func checkDistance(){
         guard let userLocation = mapView.userLocation.location else {
             return
         }
         let destinationLocation = CLLocation(latitude: annotationLatitude2, longitude: annotationLongitude2)
         let distance = calculateDistance(from: userLocation, to: destinationLocation)
-        let selectedDistanceDouble = Double(selectedDistanceArray2.last!)
-//        print(selectedDistanceDouble,Double(selectedDistanceArray2.last!))
-//        print("Distance: \(distance), Selected Distance: \(selectedDistanceDouble)")
-//        print(selectedOption)
+        let selectedDistanceDouble = Double(selectedDistanceArray2.last ?? 0)
+        
 //            let distance = Int(calculateDistance(from: userLocation, to: destinationLocation))
             if distance <= selectedDistanceDouble {
-                print(selectedOption)
+                print("selectedOption: \(selectedOption)")
                 if selectedOption != "" {
                     if selectedOption == "Alarm" {
                         alarmAlert()
                         alarmPlaying = true
-                        playSound()
+                        playSound(alarmOption: selectedAlarmName)
                         
                     } else if selectedOption == "Titreşim" {
                         alarmAlert()
@@ -81,7 +95,7 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                     } else if selectedOption == "Alarm ve Titreşim" {
                         alarmAlert()
                         alarmPlaying = true
-                        playSound()
+                        playSound(alarmOption: selectedAlarmName)
                         vibratePhone()
                         //print("alarmın olmuş olması lazım")
                     }
@@ -99,12 +113,13 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     private func previewAlert(){
+        
         if let lastSelectedDistance = selectedDistanceArray2.last, let lastSelectedOption = selectedOptionArray2.last {
             selectedOption = lastSelectedOption
-            selectedDistance = lastSelectedDistance
-//            print("Selected Option in previewAlert:", selectedOption)
-//            print("Selected Distance in previewAlert:", selectedDistance)
-            let alertController = UIAlertController(title: "Bilgilendirme", message: "Seçtiğiniz Mesafe: \(lastSelectedDistance)m\n Seçtiğiniz Alarm Tipi: \(lastSelectedOption)\n Değiştirmek için ayarlara gidiniz.", preferredStyle: UIAlertController.Style.alert)
+            selectedDistance = Int(lastSelectedDistance)
+            
+
+            let alertController = UIAlertController(title: "Bilgilendirme", message: "Seçtiğiniz Mesafe: \(lastSelectedDistance)m\n Seçtiğiniz Alarm Tipi: \(lastSelectedOption)\n Seçtiğiniz Alarm İsmi: \(selectedAlarmName)\n Değiştirmek için ayarlara gidiniz.", preferredStyle: UIAlertController.Style.alert)
             let okAction = UIAlertAction(title: "Tamam", style: UIAlertAction.Style.default) {_ in
                     //
                 self.updateRemainingDistance()
@@ -123,7 +138,9 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     @IBAction func stopButtonClicked(_ sender: Any) {
-        self.dismiss(animated: true)
+        
+       // stopAlarm()
+        navigationController?.popToRootViewController(animated: true)
     }
     
     
@@ -168,26 +185,60 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
     
-    func playSound(){
-        AudioServicesPlayAlertSound(SystemSoundID(1000))
-        //AudioServicesPlaySystemSound(SystemSoundID(1000))
-        //if let soundURL = Bundle.main.url(forResource: "sound", withExtension: "mp3") {
-          //  var sound: SystemSoundID = 0
-            //AudioServicesCreateSystemSoundID(soundURL as CFURL, &sound)
-            //AudioServicesPlaySystemSound(sound)
-        //}
+    func mapOptionToFileName(_ option: String) -> String {
+        
+        let mapping = [
+            "iPhone Alarm": "iphone_alarm",
+            "Pala Alarm": "pala_alarm",
+            "iPhone Alarm2": "iphone_alarm2",
+            "Perfect Alarm": "perfect_alarm",
+            "Alarm": "alarm"
+        ]
+
+        return mapping[option] ?? "iphone_alarm"
+    }
+    
+    func playSound(alarmOption: String){
+        
+        let filename = mapOptionToFileName(alarmOption) + ".mp3"
+        
+        print("Filename: \(filename)")
+        print("alarmOption: \(alarmOption)")
+        
+        
+        if let path = Bundle.main.path(forResource: alarmOption, ofType: "mp3", inDirectory: "mp3s") {
+            let url = URL(fileURLWithPath: path)
+            
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer?.play()
+                print("alarm calindi")
+            } catch {
+                print("Error playing sound: \(error.localizedDescription)")
+            }
+        } else {
+            print("Sound file not found for alarm option: \(alarmOption)")
+        }
+        
     }
     func alarmAlert(){
         let alarmAlert = UIAlertController(title: "Alarm", message: "Alarm Çalıyor!", preferredStyle: UIAlertController.Style.alert)
         let okAction = UIAlertAction(title: "Tamam", style: UIAlertAction.Style.default) { _ in
             self.stopAlarm()
+            self.dismiss(animated: true)
         }
         alarmAlert.addAction(okAction)
+        
+        distanceUpdateTimer?.invalidate()
+        
         present(alarmAlert, animated: true) {
             self.alarmPlaying = true
         }
     }
     func stopAlarm(){
-        alarmPlaying = false
+        if alarmPlaying {
+            audioPlayer?.stop()
+            alarmPlaying = false
+        }
     }
 }

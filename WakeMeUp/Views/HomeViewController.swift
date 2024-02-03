@@ -7,13 +7,15 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class HomeViewController: UIViewController {
     
     @IBOutlet weak var placemarkText: UILabel!
     @IBOutlet weak var settingsText: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Wake Me Up"
         
         let placemarkGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(placemarkTapped))
         placemarkText.isUserInteractionEnabled = true

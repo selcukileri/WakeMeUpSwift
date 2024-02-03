@@ -33,6 +33,7 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     var selectedDistanceArray = [Int]()
     var selectedOptionArray = [String]()
     var existingAnnotation: MKPointAnnotation?
+    var selectedAlarmArray = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -205,8 +206,12 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         let newPlace = NSEntityDescription.insertNewObject(forEntityName: "Places", into: context)
-        if nameText.text == "" || commentText.text == "" || (chosenLatitude == 0.0 && chosenLongitude == 0.0){
-            makeAlert(title: "Uyarı", message: "Lütfen isim/yorum/konum giriniz!")
+        if nameText.text == "" {
+            makeAlert(title: "Uyarı", message: "Lütfen isim giriniz!")
+        } else if commentText.text == "" {
+            makeAlert(title: "Uyarı", message: "Lütfen yorum giriniz!")
+        } else if (chosenLatitude == 0.0 && chosenLongitude == 0.0) {
+            makeAlert(title: "Uyarı", message: "Lütfen basılı tutarak konum seçiniz!")
         } else {
             newPlace.setValue(nameText.text, forKey: "title")
             newPlace.setValue(commentText.text, forKey: "subtitle")
@@ -233,8 +238,8 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         } else {
             performSegue(withIdentifier: "toStartVC", sender: nil)
         }
-            
     }
+    
     func showSettingsAlert(){
         let alertController = UIAlertController(title: "Uyarı", message: "Lütfen ayarlara gidip gerekli seçenekleri seçin.", preferredStyle: .alert)
             let settingsAction = UIAlertAction(title: "Ayarlar", style: .default) { _ in
@@ -257,6 +262,7 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             if results.count > 0 {
                 self.selectedDistanceArray.removeAll(keepingCapacity: false)
                 self.selectedOptionArray.removeAll(keepingCapacity: false)
+                self.selectedAlarmArray.removeAll(keepingCapacity: false)
                 for result in results as! [NSManagedObject] {
                     if let selectedDistance = result.value(forKey: "distance") as? Int {
                         self.selectedDistanceArray.append(selectedDistance)
@@ -265,6 +271,9 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                     if let selectedOption = result.value(forKey: "alertOption") as? String {
                         self.selectedOptionArray.append(selectedOption)
                         //print(selectedOption.count)
+                    }
+                    if let selectedAlertName = result.value(forKey: "alertName") as? String {
+                        self.selectedAlarmArray.append(selectedAlertName)
                     }
                     
                 }
@@ -282,6 +291,7 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                 destinationVC.annotationLongitude2 = self.annotationLongitude
                 destinationVC.annotationTitle2 = self.annotationTitle
                 destinationVC.annotationSubtitle2 = self.annotationSubtitle
+                destinationVC.selectedAlarmName = self.selectedAlarmArray
             }
         }
     }
