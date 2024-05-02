@@ -1,4 +1,5 @@
 {
+  "originHash" : "c6b1cc1adea5e2fd1912fa9d1292d0c0f16e32cdf320bdb295563cafbacebc9c",
   "pins" : [
     {
       "identity" : "iqkeyboardmanager",
@@ -8,7 +9,16 @@
         "revision" : "aa656e1f0d95f0154622f453599318602848be3b",
         "version" : "7.0.1"
       }
+    },
+    {
+      "identity" : "snapkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SnapKit/SnapKit.git",
+      "state" : {
+        "revision" : "2842e6e84e82eb9a8dac0100ca90d9444b0307f4",
+        "version" : "5.7.1"
+      }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

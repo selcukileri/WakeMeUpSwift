@@ -16,6 +16,7 @@ class SettingsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource
     @IBOutlet weak var alertPicker: UIPickerView!
     @IBOutlet weak var alertNamePicker: UIPickerView!
     
+    
     let distances = [300,500,750,1000]
     let alertOptions = ["Alarm", "Titreşim","Alarm ve Titreşim"]
     let alertName = ["iPhone Alarm", "Pala Alarm", "iPhone Alarm2", "Perfect Alarm", "Alarm"]
@@ -26,6 +27,7 @@ class SettingsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemPink
         
         distancePicker.delegate = self
         distancePicker.dataSource = self

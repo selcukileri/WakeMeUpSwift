@@ -13,10 +13,13 @@
 		B65363272B6BD8AF0045E5AA /* alarm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B65363252B6BD8AF0045E5AA /* alarm.mp3 */; };
 		B653632C2B6BD9E00045E5AA /* iphone_alarm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B65363292B6BD9E00045E5AA /* iphone_alarm.mp3 */; };
 		B653632D2B6BD9E00045E5AA /* perfect_alarm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B653632A2B6BD9E00045E5AA /* perfect_alarm.mp3 */; };
+		B65526C02BE437AB00A9C233 /* WMButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65526BF2BE437AB00A9C233 /* WMButton.swift */; };
+		B65526C32BE43A7900A9C233 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B65526C22BE43A7900A9C233 /* SnapKit */; };
+		B65526C52BE43A7900A9C233 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = B65526C42BE43A7900A9C233 /* SnapKit-Dynamic */; };
+		B65526C82BE43E0200A9C233 /* PlacemarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65526C72BE43E0200A9C233 /* PlacemarksCell.swift */; };
 		B687999E2B026604000E6768 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B687999D2B026604000E6768 /* AppDelegate.swift */; };
 		B68799A02B026604000E6768 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B687999F2B026604000E6768 /* SceneDelegate.swift */; };
-		B68799A22B026604000E6768 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68799A12B026604000E6768 /* HomeViewController.swift */; };
-		B68799A52B026604000E6768 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B68799A32B026604000E6768 /* Main.storyboard */; };
+		B68799A22B026604000E6768 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68799A12B026604000E6768 /* HomeVC.swift */; };
 		B68799A82B026604000E6768 /* WakeMeUp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B68799A62B026604000E6768 /* WakeMeUp.xcdatamodeld */; };
 		B68799AA2B026605000E6768 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B68799A92B026605000E6768 /* Assets.xcassets */; };
 		B68799AD2B026605000E6768 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B68799AB2B026605000E6768 /* LaunchScreen.storyboard */; };
@@ -60,11 +63,12 @@
 		B65363252B6BD8AF0045E5AA /* alarm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarm.mp3; sourceTree = "<group>"; };
 		B65363292B6BD9E00045E5AA /* iphone_alarm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = iphone_alarm.mp3; sourceTree = "<group>"; };
 		B653632A2B6BD9E00045E5AA /* perfect_alarm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = perfect_alarm.mp3; sourceTree = "<group>"; };
+		B65526BF2BE437AB00A9C233 /* WMButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WMButton.swift; sourceTree = "<group>"; };
+		B65526C72BE43E0200A9C233 /* PlacemarksCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacemarksCell.swift; sourceTree = "<group>"; };
 		B687999A2B026604000E6768 /* WakeMeUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WakeMeUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B687999D2B026604000E6768 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B687999F2B026604000E6768 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B68799A12B026604000E6768 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		B68799A42B026604000E6768 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B68799A12B026604000E6768 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		B68799A72B026604000E6768 /* WakeMeUp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WakeMeUp.xcdatamodel; sourceTree = "<group>"; };
 		B68799A92B026605000E6768 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B68799AC2B026605000E6768 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -86,6 +90,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B64505E92B6A71EF007E88C1 /* IQKeyboardManagerSwift in Frameworks */,
+				B65526C32BE43A7900A9C233 /* SnapKit in Frameworks */,
+				B65526C52BE43A7900A9C233 /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,7 +123,7 @@
 		B64505E62B6A6FA1007E88C1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B68799A12B026604000E6768 /* HomeViewController.swift */,
+				B68799A12B026604000E6768 /* HomeVC.swift */,
 				B68799D22B026A56000E6768 /* PlacemarksVC.swift */,
 				B68799D62B026A7F000E6768 /* MapsVC.swift */,
 				B68799DA2B026AAC000E6768 /* SettingsVC.swift */,
@@ -136,6 +142,22 @@
 				B653632A2B6BD9E00045E5AA /* perfect_alarm.mp3 */,
 			);
 			path = mp3s;
+			sourceTree = "<group>";
+		};
+		B65526BB2BE4355C00A9C233 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				B65526BF2BE437AB00A9C233 /* WMButton.swift */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		B65526C62BE43DE800A9C233 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				B65526C72BE43E0200A9C233 /* PlacemarksCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		B68799912B026604000E6768 = {
@@ -166,7 +188,8 @@
 				B65363282B6BD8B30045E5AA /* mp3s */,
 				B64505E52B6A6F96007E88C1 /* Model */,
 				B64505E62B6A6FA1007E88C1 /* Views */,
-				B68799A32B026604000E6768 /* Main.storyboard */,
+				B65526BB2BE4355C00A9C233 /* CustomViews */,
+				B65526C62BE43DE800A9C233 /* Cells */,
 				B68799A92B026605000E6768 /* Assets.xcassets */,
 				B68799AB2B026605000E6768 /* LaunchScreen.storyboard */,
 				B68799AE2B026605000E6768 /* Info.plist */,
@@ -209,6 +232,8 @@
 			name = WakeMeUp;
 			packageProductDependencies = (
 				B64505E82B6A71EF007E88C1 /* IQKeyboardManagerSwift */,
+				B65526C22BE43A7900A9C233 /* SnapKit */,
+				B65526C42BE43A7900A9C233 /* SnapKit-Dynamic */,
 			);
 			productName = WakeMeUp;
 			productReference = B687999A2B026604000E6768 /* WakeMeUp.app */;
@@ -284,6 +309,7 @@
 			mainGroup = B68799912B026604000E6768;
 			packageReferences = (
 				B64505E72B6A71EF007E88C1 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				B65526C12BE43A7900A9C233 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = B687999B2B026604000E6768 /* Products */;
 			projectDirPath = "";
@@ -307,7 +333,6 @@
 				B68799AA2B026605000E6768 /* Assets.xcassets in Resources */,
 				B653632D2B6BD9E00045E5AA /* perfect_alarm.mp3 in Resources */,
 				B65363232B6AC6DC0045E5AA /* pala_alarm.mp3 in Resources */,
-				B68799A52B026604000E6768 /* Main.storyboard in Resources */,
 				B65363262B6BD8AF0045E5AA /* iphone_alarm2.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -334,8 +359,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B68799A82B026604000E6768 /* WakeMeUp.xcdatamodeld in Sources */,
-				B68799A22B026604000E6768 /* HomeViewController.swift in Sources */,
+				B65526C02BE437AB00A9C233 /* WMButton.swift in Sources */,
+				B68799A22B026604000E6768 /* HomeVC.swift in Sources */,
 				B687999E2B026604000E6768 /* AppDelegate.swift in Sources */,
+				B65526C82BE43E0200A9C233 /* PlacemarksCell.swift in Sources */,
 				B68799D32B026A56000E6768 /* PlacemarksVC.swift in Sources */,
 				B68799A02B026604000E6768 /* SceneDelegate.swift in Sources */,
 				B68799D72B026A7F000E6768 /* MapsVC.swift in Sources */,
@@ -385,14 +412,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		B68799A32B026604000E6768 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B68799A42B026604000E6768 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B68799AB2B026605000E6768 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -537,7 +556,6 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Gideceğin yere kalan mesafeni öğrenmek için";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -567,7 +585,6 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Gideceğin yere kalan mesafeni öğrenmek için";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -709,6 +726,14 @@
 				minimumVersion = 7.0.1;
 			};
 		};
+		B65526C12BE43A7900A9C233 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -716,6 +741,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B64505E72B6A71EF007E88C1 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
+		};
+		B65526C22BE43A7900A9C233 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B65526C12BE43A7900A9C233 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		B65526C42BE43A7900A9C233 /* SnapKit-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B65526C12BE43A7900A9C233 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = "SnapKit-Dynamic";
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -10,7 +10,7 @@ import CoreData
 
 class PlacemarksVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var tableView: UITableView!
+    let tableView = UITableView()
         
     var titleArray = [String]()
     var idArray = [UUID]()
@@ -19,20 +19,36 @@ class PlacemarksVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
+        configureTableView()
         getData()
+        configure()
+        
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.addObserver(self, selector: #selector(getData), name: NSNotification.Name("newPlace"), object: nil)
     }
     
+    func configureTableView(){
+        view.addSubview(tableView)
+        tableView.frame = view.bounds
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.rowHeight = 100
+        tableView.backgroundColor = .black
+        tableView.register(PlacemarksCell.self, forCellReuseIdentifier: PlacemarksCell.reuseID)
+    }
     
-    @IBAction func addButtonClicked(_ sender: Any) {
+    func configure(){
+        view.backgroundColor = .systemBackground
+        let addButton = UIBarButtonItem(image: .add, style: .done, target: self, action: #selector(addTapped))
+        navigationItem.rightBarButtonItem = addButton
+    }
+    
+    @objc func addTapped(){
         chosenTitle = ""
-        performSegue(withIdentifier: "toMapsVC", sender: nil)
+        let mapsVC = MapsVC()
+        navigationController?.pushViewController(mapsVC, animated: true)
     }
     
     @objc func getData(){
@@ -69,28 +85,20 @@ class PlacemarksVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = titleArray[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: PlacemarksCell.reuseID, for: indexPath) as! PlacemarksCell
+        print("titleArrray:\(titleArray[0])")
+        cell.nameText.text = titleArray[indexPath.row]
         return cell
         
     }
-    func makeAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.default)
-        alert.addAction(okButton)
-        self.present(alert, animated: true)
-    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         chosenTitle = titleArray[indexPath.row]
         chosenTitleId = idArray[indexPath.row]
-        performSegue(withIdentifier: "toMapsVC", sender: nil)
-    }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toMapsVC" {
-            let destinationVC = segue.destination as! MapsVC
-            destinationVC.selectedTitle = chosenTitle
-            destinationVC.selectedTitleId = chosenTitleId
-        }
+        let destVC = MapsVC()
+        destVC.selectedTitle = chosenTitle
+        destVC.selectedTitleId = chosenTitleId
+        navigationController?.pushViewController(destVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -127,5 +135,10 @@ class PlacemarksVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         }
     }
     
-
+    func makeAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.default)
+        alert.addAction(okButton)
+        self.present(alert, animated: true)
+    }
 }

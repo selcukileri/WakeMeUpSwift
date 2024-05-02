@@ -11,14 +11,14 @@ import CoreLocation
 import CoreData
 
 class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
-    
-    @IBOutlet weak var saveButton: UIButton!
-    @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var nameText: UITextField!
-    @IBOutlet weak var commentText: UITextField!
-    @IBOutlet weak var returnToLocation: UIButton!
-    @IBOutlet weak var remainingDistance: UILabel!
+
+    let saveButton = UIButton()
+    let startButton = UIButton()
+    let mapView = MKMapView()
+    let nameText = UITextField()
+    let commentText = UITextField()
+    let returnToLocation = UIButton()
+    let remainingDistance = UILabel()
     
     
     var locationManager = CLLocationManager()
@@ -142,6 +142,8 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     
+    
+    
     @IBAction func returnToUserLocation(_ sender: Any) {
         if let userLocation = mapView.userLocation.location?.coordinate {
             let region = MKCoordinateRegion(center: userLocation, latitudinalMeters: 1000, longitudinalMeters: 1000)
@@ -174,19 +176,6 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             
         }
     }
-    
-    func makeAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.default)
-        alert.addAction(okButton)
-        self.present(alert, animated: true)
-    }
-    
-
-    @objc func hideKeyboard(){
-        view.endEditing(true)
-    }
-    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if selectedTitle == "" {
@@ -266,11 +255,9 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                 for result in results as! [NSManagedObject] {
                     if let selectedDistance = result.value(forKey: "distance") as? Int {
                         self.selectedDistanceArray.append(selectedDistance)
-                        //print("\(selectedDistance.nonzeroBitCount)")
                     }
                     if let selectedOption = result.value(forKey: "alertOption") as? String {
                         self.selectedOptionArray.append(selectedOption)
-                        //print(selectedOption.count)
                     }
                     if let selectedAlertName = result.value(forKey: "alertName") as? String {
                         self.selectedAlarmArray.append(selectedAlertName)
@@ -295,4 +282,17 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             }
         }
     }
+    
+    func makeAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.default)
+        alert.addAction(okButton)
+        self.present(alert, animated: true)
+    }
+    
+
+    @objc func hideKeyboard(){
+        view.endEditing(true)
+    }
+    
 }
