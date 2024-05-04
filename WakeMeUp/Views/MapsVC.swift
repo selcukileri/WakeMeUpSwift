@@ -32,7 +32,7 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     var selectedDistanceArray = [Int]()
     var selectedOptionArray = [String]()
     var existingAnnotation: MKPointAnnotation?
-    var selectedAlarmArray = ""
+    var selectedAlarmArray = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -344,7 +344,7 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             startVC.annotationLongitude2 = annotationLongitude
             startVC.annotationTitle2 = annotationTitle
             startVC.annotationSubtitle2 = annotationSubtitle
-            startVC.selectedAlarmName = selectedAlarmArray
+            startVC.selectedAlertNameArray = selectedAlarmArray
             navigationController?.pushViewController(startVC, animated: true)
         }
     }

@@ -8,6 +8,7 @@
 import UIKit
 import MapKit
 import AudioToolbox
+import CoreData
 import AVFoundation
 
 class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
@@ -25,12 +26,13 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     var annotationLongitude2 : Double = 0.0
     var selectedDistanceArray2 = [Int]()
     var selectedOptionArray2 = [String]()
+    var selectedAlertNameArray = [String]()
     var selectedDistance = Int()
     var selectedOption = String()
     var isUserTrackingEnabled = true
     var alarmPlaying = false
     var audioPlayer: AVAudioPlayer?
-    var selectedAlarmName: String = ""
+    var selectedAlertName = String()
     var distanceUpdateTimer: Timer?
     
     override func viewDidLoad() {
@@ -84,9 +86,6 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             make.top.equalToSuperview().offset(16)
             make.leading.equalToSuperview().offset(8)
         }
-        
-        
-        
     }
     
     private func configure(){
@@ -101,11 +100,7 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         }
         checkDistance()
         distanceUpdateTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(updateDistance), userInfo: nil, repeats: true)
-        print("selectedalarmname: \(selectedAlarmName)")
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        selectedAlarmName = ""
+        print("selectedalarmname: \(selectedAlertName)")
     }
     
     @objc func updateDistance(){
@@ -139,7 +134,7 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                     if selectedOption == "Alarm" {
                         alarmAlert()
                         alarmPlaying = true
-                        playSound(alarmOption: selectedAlarmName)
+                        playSound(alarmOption: selectedAlertName)
                         
                     } else if selectedOption == "Titreşim" {
                         alarmAlert()
@@ -148,7 +143,7 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                     } else if selectedOption == "Alarm ve Titreşim" {
                         alarmAlert()
                         alarmPlaying = true
-                        playSound(alarmOption: selectedAlarmName)
+                        playSound(alarmOption: selectedAlertName)
                         vibratePhone()
                         //print("alarmın olmuş olması lazım")
                     }
@@ -167,12 +162,14 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     private func previewAlert(){
         
-        if let lastSelectedDistance = selectedDistanceArray2.last, let lastSelectedOption = selectedOptionArray2.last {
+        if let lastSelectedDistance = selectedDistanceArray2.last, let lastSelectedOption = selectedOptionArray2.last, let lastSelectedAlertName = selectedAlertNameArray.last {
             selectedOption = lastSelectedOption
             selectedDistance = Int(lastSelectedDistance)
+            selectedAlertName = lastSelectedAlertName
+            print("selectedAlertName: \(selectedAlertName)")
             
 
-            let alertController = UIAlertController(title: "Bilgilendirme", message: "Seçtiğiniz Mesafe: \(lastSelectedDistance)m\n Seçtiğiniz Alarm Tipi: \(lastSelectedOption)\n Seçtiğiniz Alarm İsmi: \(selectedAlarmName)\n Değiştirmek için ayarlara gidiniz.", preferredStyle: UIAlertController.Style.alert)
+            let alertController = UIAlertController(title: "Bilgilendirme", message: "Seçtiğiniz Mesafe: \(selectedDistance)m\n Seçtiğiniz Alarm Tipi: \(selectedOption)\n Seçtiğiniz Alarm İsmi: \(selectedAlertName)\n Değiştirmek için ayarlara gidiniz.", preferredStyle: UIAlertController.Style.alert)
             let okAction = UIAlertAction(title: "Tamam", style: UIAlertAction.Style.default) {_ in
                     //
                 self.updateRemainingDistance()
@@ -185,9 +182,7 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                 alertController.addAction(okAction)
                 alertController.addAction(settingsAction)
                 present(alertController, animated: true)
-            
-               
-            
+          
         }
     }
     
