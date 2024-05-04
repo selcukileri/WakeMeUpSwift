@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WMButton: UIButton {
+class HomeButtons: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)

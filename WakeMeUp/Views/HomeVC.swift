@@ -10,8 +10,8 @@ import SnapKit
 
 class HomeVC: UIViewController {
     
-    let placemarkText = WMButton()
-    let settingsText = WMButton()
+    let placemarkText = HomeButtons()
+    let settingsText = HomeButtons()
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+import SnapKit
 import CoreLocation
 import CoreData
 
@@ -36,6 +37,7 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        getDataFromOptions()
         setupUI()
         configure()
         
@@ -293,7 +295,8 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     func showSettingsAlert(){
         let alertController = UIAlertController(title: "Uyarı", message: "Lütfen ayarlara gidip gerekli seçenekleri seçin.", preferredStyle: .alert)
             let settingsAction = UIAlertAction(title: "Ayarlar", style: .default) { _ in
-                self.performSegue(withIdentifier: "mapViewToSettingsVC", sender: nil)
+                let destVC = SettingsVC()
+                self.navigationController?.pushViewController(destVC, animated: true)
             }
             let cancelAction = UIAlertAction(title: "İptal", style: .cancel, handler: nil)
 
@@ -307,32 +310,32 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         let context = appDelegate.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Options")
         request.returnsObjectsAsFaults = false
-        do {
-            let results = try context.fetch(request)
-            if results.count > 0 {
-                self.selectedDistanceArray.removeAll(keepingCapacity: false)
-                self.selectedOptionArray.removeAll(keepingCapacity: false)
-                self.selectedAlarmArray.removeAll(keepingCapacity: false)
-                for result in results as! [NSManagedObject] {
-                    if let selectedDistance = result.value(forKey: "distance") as? Int {
-                        self.selectedDistanceArray.append(selectedDistance)
+        DispatchQueue.main.async {
+            do {
+                let results = try context.fetch(request)
+                if results.count > 0 {
+                    self.selectedDistanceArray.removeAll(keepingCapacity: false)
+                    self.selectedOptionArray.removeAll(keepingCapacity: false)
+                    self.selectedAlarmArray.removeAll(keepingCapacity: false)
+                    for result in results as! [NSManagedObject] {
+                        if let selectedDistance = result.value(forKey: "distance") as? Int {
+                            self.selectedDistanceArray.append(selectedDistance)
+                        }
+                        if let selectedOption = result.value(forKey: "alertOption") as? String {
+                            self.selectedOptionArray.append(selectedOption)
+                        }
+                        if let selectedAlertName = result.value(forKey: "alertName") as? String {
+                            self.selectedAlarmArray.append(selectedAlertName)
+                        }
                     }
-                    if let selectedOption = result.value(forKey: "alertOption") as? String {
-                        self.selectedOptionArray.append(selectedOption)
-                    }
-                    if let selectedAlertName = result.value(forKey: "alertName") as? String {
-                        self.selectedAlarmArray.append(selectedAlertName)
-                    }
-                    
                 }
+            } catch {
+                self.makeAlert(title: "Uyarı", message: error.localizedDescription)
             }
-        } catch {
-            makeAlert(title: "Uyarı", message: error.localizedDescription)
         }
     }
 
     @objc func startButtonClicked() {
-        getDataFromOptions()
         
         if selectedDistanceArray.isEmpty || selectedOptionArray.isEmpty {
             showSettingsAlert()

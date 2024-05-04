@@ -8,6 +8,7 @@
 import UIKit
 import MapKit
 import AudioToolbox
+import SnapKit
 import CoreData
 import AVFoundation
 
@@ -131,27 +132,24 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             if distance <= selectedDistanceDouble {
                 print("selectedOption: \(selectedOption)")
                 if selectedOption != "" {
-                    if selectedOption == "Alarm" {
+                    switch selectedOption {
+                    case "Alarm":
                         alarmAlert()
                         alarmPlaying = true
                         playSound(alarmOption: selectedAlertName)
-                        
-                    } else if selectedOption == "Titreşim" {
+                    case "Titreşim":
                         alarmAlert()
                         alarmPlaying = true
                         vibratePhone()
-                    } else if selectedOption == "Alarm ve Titreşim" {
+                    case "Alarm ve Titreşim":
                         alarmAlert()
                         alarmPlaying = true
                         playSound(alarmOption: selectedAlertName)
                         vibratePhone()
-                        //print("alarmın olmuş olması lazım")
+                    default:
+                        break
                     }
-                } else {
-                    makeAlert(title: "Hata", message: "Selected Option BOSSSSSS")
                 }
-            } else {
-                //previewAlert()
             }
         }
         
@@ -249,27 +247,24 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     func playSound(alarmOption: String){
         
-        let filename = mapOptionToFileName(alarmOption) + ".mp3"
+        let filename = mapOptionToFileName(alarmOption) // + ".mp3"
         
         print("Filename: \(filename)")
-        print("alarmOption: \(alarmOption)")
         
-        
-        if let path = Bundle.main.path(forResource: alarmOption, ofType: "mp3", inDirectory: "mp3s") {
-            let url = URL(fileURLWithPath: path)
-            
-            do {
-                audioPlayer = try AVAudioPlayer(contentsOf: url)
-                audioPlayer?.play()
-                print("alarm calindi")
-            } catch {
-                print("Error playing sound: \(error.localizedDescription)")
-            }
-        } else {
-            print("Sound file not found for alarm option: \(alarmOption)")
+        guard let path = Bundle.main.path(forResource: filename, ofType: "mp3") else {
+            print("Sound file not found for alarm option: \(filename)")
+            return
         }
-        
+        let url = URL(fileURLWithPath: path)
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer?.play()
+            print("alarm calindi")
+        } catch {
+            print("Error playing sound: \(error.localizedDescription)")
+        }
     }
+    
     func alarmAlert(){
         let alarmAlert = UIAlertController(title: "Alarm", message: "Alarm Çalıyor!", preferredStyle: UIAlertController.Style.alert)
         let okAction = UIAlertAction(title: "Tamam", style: UIAlertAction.Style.default) { _ in
@@ -277,13 +272,12 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             self.dismiss(animated: true)
         }
         alarmAlert.addAction(okAction)
-        
         distanceUpdateTimer?.invalidate()
-        
         present(alarmAlert, animated: true) {
             self.alarmPlaying = true
         }
     }
+    
     func stopAlarm(){
         if alarmPlaying {
             audioPlayer?.stop()
