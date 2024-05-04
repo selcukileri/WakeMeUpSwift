@@ -267,12 +267,14 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     func alarmAlert(){
         let alarmAlert = UIAlertController(title: "Alarm", message: "Alarm Çalıyor!", preferredStyle: UIAlertController.Style.alert)
+        self.distanceUpdateTimer?.invalidate()
         let okAction = UIAlertAction(title: "Tamam", style: UIAlertAction.Style.default) { _ in
             self.stopAlarm()
             self.dismiss(animated: true)
+
+            
         }
         alarmAlert.addAction(okAction)
-        distanceUpdateTimer?.invalidate()
         present(alarmAlert, animated: true) {
             self.alarmPlaying = true
         }

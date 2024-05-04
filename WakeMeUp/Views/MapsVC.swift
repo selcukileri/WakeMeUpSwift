@@ -114,9 +114,12 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         view.backgroundColor = .systemBackground
         mapView.delegate = self
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+        DispatchQueue.main.async {
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            self.locationManager.requestWhenInUseAuthorization()
+            self.locationManager.startUpdatingLocation()
+        }
+
         startButton.isHidden = true
         mapView.setUserTrackingMode(.follow, animated: true)
         
