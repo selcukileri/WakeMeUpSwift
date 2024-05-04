@@ -7,15 +7,16 @@
 
 import UIKit
 import CoreData
+import SnapKit
 
 class SettingsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
-    @IBOutlet weak var distanceLabel: UILabel!
-    @IBOutlet weak var alertLabel: UILabel!
-    @IBOutlet weak var distancePicker: UIPickerView!
-    @IBOutlet weak var alertPicker: UIPickerView!
-    @IBOutlet weak var alertNamePicker: UIPickerView!
-    
+    let distanceLabel = UILabel()
+    let alertLabel = UILabel()
+    let distancePicker = UIPickerView()
+    let alertPicker = UIPickerView()
+    let alertNamePicker = UIPickerView()
+    let text = UILabel()
     
     let distances = [300,500,750,1000]
     let alertOptions = ["Alarm", "Titreşim","Alarm ve Titreşim"]
@@ -27,6 +28,11 @@ class SettingsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configure()
+
+    }
+    
+    private func configure(){
         view.backgroundColor = .systemPink
         
         distancePicker.delegate = self
@@ -41,11 +47,12 @@ class SettingsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource
         pickerView(distancePicker, didSelectRow: 0, inComponent: 0)
         pickerView(alertPicker, didSelectRow: 0, inComponent: 0)
         pickerView(alertNamePicker, didSelectRow: 0, inComponent: 0)
-
-        // Do any additional setup after loading the view.
+        
+        
+        
     }
     
-    @IBAction func saveButtonClicked(_ sender: Any) {
+    @objc func saveButtonClicked() {
         if let selectedDistance = selectedDistance, let selectedAlertOption = selectedAlertOption, let selectedAlertName = selectedAlertName {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let context = appDelegate.persistentContainer.viewContext

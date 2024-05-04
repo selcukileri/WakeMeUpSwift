@@ -19,11 +19,14 @@ class WMButton: UIButton {
     }
     
     private func configure(){
-        setTitleColor(.white, for: .normal)
-        backgroundColor = .secondaryLabel
-        titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        setTitleColor(.label, for: .normal)
+        backgroundColor = .systemBackground
+        titleLabel?.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
         contentHorizontalAlignment = .leading
         titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+        layer.borderColor = UIColor.lightGray.cgColor
+        layer.borderWidth = 1.0
+        layer.masksToBounds = true
         layer.cornerRadius = 15
         addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }

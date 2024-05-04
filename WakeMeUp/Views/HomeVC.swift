@@ -22,6 +22,7 @@ class HomeVC: UIViewController {
     }
     
     private func configure(){
+        view.backgroundColor = .systemBackground
         title = "Wake Me Up"
         
         placemarkText.setTitle("Placemarks", for: .normal)

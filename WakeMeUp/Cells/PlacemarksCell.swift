@@ -10,6 +10,7 @@ import UIKit
 class PlacemarksCell: UITableViewCell {
     
     let nameText = UILabel()
+    let locationImage = UIButton()
     static let reuseID = "PlacemarksCell"
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -23,19 +24,28 @@ class PlacemarksCell: UITableViewCell {
     
     private func configure(){
         addSubview(nameText)
-        backgroundColor = .black
-        layer.cornerRadius = 50
-        accessoryType = .disclosureIndicator
-        nameText.font = UIFont.systemFont(ofSize: 20)
-        nameText.backgroundColor = .black
-        nameText.layer.cornerRadius = 60
-        nameText.textColor = .white
+        addSubview(locationImage)
         
+        locationImage.setImage(UIImage(systemName: "mappin"), for: .normal)
+        locationImage.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(5)
+            make.centerY.equalToSuperview()
+        }
+        
+        nameText.textColor = .label
+        nameText.adjustsFontSizeToFitWidth = true
+        nameText.minimumScaleFactor = 0.9
+        nameText.lineBreakMode = .byTruncatingTail
+        backgroundColor = .systemBackground
+        layer.cornerRadius = 5
+        
+        nameText.font = UIFont.systemFont(ofSize: 20)
         
         nameText.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(8)
-            make.width.equalToSuperview().inset(15)
+            make.leading.equalTo(locationImage.snp.trailing).offset(8)
             make.height.equalTo(70)
         }
+
     }
 }

@@ -12,8 +12,11 @@ import AVFoundation
 
 class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
-    @IBOutlet weak var remainingDistanceLabel: UILabel!
-    @IBOutlet weak var mapView: MKMapView!
+    let mapView = MKMapView()
+    let remainingDistanceLabel = UILabel()
+    let stopButton = UIButton()
+    let returnToLocation = UIButton()
+    let navigateToSelectedLocation = UIButton()
     
     var locationManager = CLLocationManager()
     var annotationTitle2 = ""
@@ -32,9 +35,61 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        configureUI()
         previewAlert()
+        configure()
         
+    }
+    
+    private func configureUI(){
+        view.backgroundColor = .systemBackground
+        view.addSubview(mapView)
+        view.addSubview(remainingDistanceLabel)
+        view.addSubview(stopButton)
+        mapView.addSubview(returnToLocation)
+        mapView.addSubview(navigateToSelectedLocation)
+        
+        mapView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(8)
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.6)
+        }
+        
+        remainingDistanceLabel.snp.makeConstraints { make in
+            make.top.equalTo(mapView.snp.bottom).offset(32)
+            make.horizontalEdges.equalToSuperview().inset(32)
+            make.height.equalTo(50)
+        }
+        stopButton.setTitle("Stop", for: .normal)
+        stopButton.setTitleColor(.label, for: .normal)
+        stopButton.layer.cornerRadius = 10
+        stopButton.addTarget(self, action: #selector(stopButtonClicked), for: .touchUpInside)
+        
+        stopButton.snp.makeConstraints { make in
+            make.top.equalTo(remainingDistanceLabel.snp.bottom).offset(32)
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-20)
+        }
+        
+        returnToLocation.setImage(UIImage(systemName: "location.fill"), for: .normal)
+        returnToLocation.addTarget(self, action: #selector(returnUserLocationTapped), for: .touchUpInside)
+        returnToLocation.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-8)
+        }
+        
+        navigateToSelectedLocation.setImage(UIImage(systemName: "location.north.fill"), for: .normal)
+        navigateToSelectedLocation.addTarget(self, action: #selector(navigateToSelectedLocationTapped), for: .touchUpInside)
+        navigateToSelectedLocation.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(16)
+            make.leading.equalToSuperview().offset(8)
+        }
+        
+        
+        
+    }
+    
+    private func configure(){
         remainingDistanceLabel.text = "Kalan Mesafe Hesaplanıyor.."
         mapView.delegate = self
         locationManager.delegate = self
@@ -47,7 +102,6 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         checkDistance()
         distanceUpdateTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(updateDistance), userInfo: nil, repeats: true)
         print("selectedalarmname: \(selectedAlarmName)")
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -79,7 +133,6 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         let distance = calculateDistance(from: userLocation, to: destinationLocation)
         let selectedDistanceDouble = Double(selectedDistanceArray2.last ?? 0)
         
-//            let distance = Int(calculateDistance(from: userLocation, to: destinationLocation))
             if distance <= selectedDistanceDouble {
                 print("selectedOption: \(selectedOption)")
                 if selectedOption != "" {
@@ -103,7 +156,7 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                     makeAlert(title: "Hata", message: "Selected Option BOSSSSSS")
                 }
             } else {
-                previewAlert()
+                //previewAlert()
             }
         }
         
@@ -126,7 +179,8 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                 self.selectedAnnotation()
                 }
                 let settingsAction = UIAlertAction(title: "Ayarlara Git", style: UIAlertAction.Style.default) {_ in
-                    self.performSegue(withIdentifier: "StartVCtoSettingsVC", sender: nil)
+                    let settingsVC = SettingsVC()
+                    self.navigationController?.pushViewController(settingsVC, animated: true)
                 }
                 alertController.addAction(okAction)
                 alertController.addAction(settingsAction)
@@ -137,14 +191,14 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-    @IBAction func stopButtonClicked(_ sender: Any) {
+    @objc func stopButtonClicked() {
         
        // stopAlarm()
         navigationController?.popToRootViewController(animated: true)
     }
     
     
-    @IBAction func returnMyLocation(_ sender: Any) {
+    @objc func returnUserLocationTapped() {
         if let userLocation = mapView.userLocation.location?.coordinate {
             let region = MKCoordinateRegion(center: userLocation, latitudinalMeters: 1000, longitudinalMeters: 1000)
             mapView.setRegion(region, animated: true)
@@ -169,7 +223,7 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         mapView.addAnnotation(annotation)
     }
     
-    @IBAction func navigateToSelectedLocation(_ sender: Any) {
+    @objc func navigateToSelectedLocationTapped() {
         
         print("button2 clicked")
         print("selected coordinates2: \(annotationLatitude2), \(annotationLongitude2)")

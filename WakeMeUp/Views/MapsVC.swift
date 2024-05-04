@@ -12,14 +12,13 @@ import CoreData
 
 class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
+    let mapView = MKMapView()
     let saveButton = UIButton()
     let startButton = UIButton()
-    let mapView = MKMapView()
     let nameText = UITextField()
     let commentText = UITextField()
     let returnToLocation = UIButton()
     let remainingDistance = UILabel()
-    
     
     var locationManager = CLLocationManager()
     var chosenLatitude = Double()
@@ -37,6 +36,80 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+        configure()
+        
+        
+    }
+    
+    private func setupUI(){
+        view.addSubview(mapView)
+        view.addSubview(saveButton)
+        view.addSubview(startButton)
+        view.addSubview(nameText)
+        view.addSubview(commentText)
+        view.addSubview(returnToLocation)
+        view.addSubview(remainingDistance)
+        
+        let namePadding = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: nameText.frame.height))
+        let commentPadding = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: commentText.frame.height))
+        
+        nameText.placeholder = "Please enter a name"
+        nameText.textColor = .label
+        nameText.layer.borderColor = UIColor.lightGray.cgColor
+        nameText.layer.borderWidth = 1.0
+        nameText.layer.masksToBounds = true
+        nameText.layer.cornerRadius = 10
+        nameText.leftView = namePadding
+        nameText.leftViewMode = .always
+        nameText.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(16)
+            make.horizontalEdges.equalToSuperview().inset(16)
+            make.height.equalTo(40)
+        }
+        
+        commentText.placeholder = "Please enter a comment"
+        commentText.textColor = .label
+        commentText.layer.borderColor = UIColor.lightGray.cgColor
+        commentText.layer.borderWidth = 1.0
+        commentText.layer.masksToBounds = true
+        commentText.layer.cornerRadius = 10
+        commentText.leftView = commentPadding
+        commentText.leftViewMode = .always
+        commentText.snp.makeConstraints { make in
+            make.top.equalTo(nameText.snp.bottom).offset(8)
+            make.horizontalEdges.equalToSuperview().inset(16)
+            make.height.equalTo(40)
+        }
+        
+        mapView.snp.makeConstraints { make in
+            make.top.equalTo(commentText.snp.bottom).offset(32)
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(450)
+        }
+        
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.setTitleColor(.label, for: .normal)
+        saveButton.layer.cornerRadius = 10
+        saveButton.addTarget(self, action: #selector(saveButtonClicked), for: .touchUpInside)
+        saveButton.snp.makeConstraints { make in
+            make.top.equalTo(mapView.snp.bottom).offset(20)
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-20)
+        }
+        startButton.setTitle("Start", for: .normal)
+        startButton.setTitleColor(.label, for: .normal)
+        startButton.layer.cornerRadius = 10
+        startButton.addTarget(self, action: #selector(startButtonClicked), for: .touchUpInside)
+        startButton.snp.makeConstraints { make in
+            make.top.equalTo(mapView.snp.bottom).offset(20)
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-20)
+        }
+    }
+    
+    private func configure(){
+        view.backgroundColor = .systemBackground
         mapView.delegate = self
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -50,6 +123,7 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(chooseLocation(longPressGestureRecognizer:)))
         longPressGestureRecognizer.minimumPressDuration = 2
         mapView.addGestureRecognizer(longPressGestureRecognizer)
+        
         if selectedTitle != "" {
             returnToLocation.isHidden = true
             longPressGestureRecognizer.isEnabled = false
@@ -141,10 +215,7 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-    
-    
-    
-    @IBAction func returnToUserLocation(_ sender: Any) {
+    @objc func returnToUserLocation(){
         if let userLocation = mapView.userLocation.location?.coordinate {
             let region = MKCoordinateRegion(center: userLocation, latitudinalMeters: 1000, longitudinalMeters: 1000)
             mapView.setRegion(region, animated: true)
@@ -191,7 +262,7 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     
-    @IBAction func saveButtonClicked(_ sender: Any) {
+    @objc func saveButtonClicked() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         let newPlace = NSEntityDescription.insertNewObject(forEntityName: "Places", into: context)
@@ -217,16 +288,6 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         NotificationCenter.default.post(name: NSNotification.Name("newPlace"), object: nil)
         navigationController?.popViewController(animated: true)
         
-    }
-    
-    @IBAction func startButtonClicked(_ sender: Any) {
-        getDataFromOptions()
-        
-        if selectedDistanceArray.isEmpty || selectedOptionArray.isEmpty {
-            showSettingsAlert()
-        } else {
-            performSegue(withIdentifier: "toStartVC", sender: nil)
-        }
     }
     
     func showSettingsAlert(){
@@ -269,17 +330,22 @@ class MapsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             makeAlert(title: "Uyarı", message: error.localizedDescription)
         }
     }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toStartVC" {
-            if let destinationVC = segue.destination as? StartVC {
-                destinationVC.selectedDistanceArray2 = self.selectedDistanceArray
-                destinationVC.selectedOptionArray2 = self.selectedOptionArray
-                destinationVC.annotationLatitude2 = self.annotationLatitude
-                destinationVC.annotationLongitude2 = self.annotationLongitude
-                destinationVC.annotationTitle2 = self.annotationTitle
-                destinationVC.annotationSubtitle2 = self.annotationSubtitle
-                destinationVC.selectedAlarmName = self.selectedAlarmArray
-            }
+
+    @objc func startButtonClicked() {
+        getDataFromOptions()
+        
+        if selectedDistanceArray.isEmpty || selectedOptionArray.isEmpty {
+            showSettingsAlert()
+        } else {
+            let startVC = StartVC()
+            startVC.selectedDistanceArray2 = selectedDistanceArray
+            startVC.selectedOptionArray2 = selectedOptionArray
+            startVC.annotationLatitude2 = annotationLatitude
+            startVC.annotationLongitude2 = annotationLongitude
+            startVC.annotationTitle2 = annotationTitle
+            startVC.annotationSubtitle2 = annotationSubtitle
+            startVC.selectedAlarmName = selectedAlarmArray
+            navigationController?.pushViewController(startVC, animated: true)
         }
     }
     

@@ -35,7 +35,7 @@ class PlacemarksVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 100
-        tableView.backgroundColor = .black
+        tableView.backgroundColor = .systemBackground
         tableView.register(PlacemarksCell.self, forCellReuseIdentifier: PlacemarksCell.reuseID)
     }
     
@@ -86,7 +86,6 @@ class PlacemarksVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PlacemarksCell.reuseID, for: indexPath) as! PlacemarksCell
-        print("titleArrray:\(titleArray[0])")
         cell.nameText.text = titleArray[indexPath.row]
         return cell
         
@@ -95,10 +94,21 @@ class PlacemarksVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         chosenTitle = titleArray[indexPath.row]
         chosenTitleId = idArray[indexPath.row]
+        tableView.deselectRow(at: indexPath, animated: true)
         let destVC = MapsVC()
         destVC.selectedTitle = chosenTitle
         destVC.selectedTitleId = chosenTitleId
         navigationController?.pushViewController(destVC, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 20
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView = UIView()
+        footerView.backgroundColor = .clear 
+        return footerView
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -118,6 +128,7 @@ class PlacemarksVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                                 context.delete(result)
                                 titleArray.remove(at: indexPath.row)
                                 idArray.remove(at: indexPath.row)
+                                tableView.deleteRows(at: [indexPath], with: .left)
                                 self.tableView.reloadData()
                                 do {
                                     try context.save()
