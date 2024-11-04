@@ -41,6 +41,7 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         configureUI()
         previewAlert()
         configure()
+        configureAudioSession()
         
     }
     
@@ -94,6 +95,7 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         mapView.delegate = self
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.allowsBackgroundLocationUpdates = true
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         if isUserTrackingEnabled {
@@ -102,6 +104,15 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         checkDistance()
         distanceUpdateTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(updateDistance), userInfo: nil, repeats: true)
         print("selectedalarmname: \(selectedAlertName)")
+    }
+
+    private func configureAudioSession(){
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.mixWithOthers])
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("Failed to set audio session category")
+        }
     }
     
     @objc func updateDistance(){
@@ -285,5 +296,9 @@ class StartVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             audioPlayer?.stop()
             alarmPlaying = false
         }
+    }
+    
+    deinit {
+        distanceUpdateTimer?.invalidate()
     }
 }

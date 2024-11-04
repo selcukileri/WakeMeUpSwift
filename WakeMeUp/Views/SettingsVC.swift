@@ -151,7 +151,7 @@ class SettingsVC: UIViewController {
         
     }
 
-    @objc func saveButtonClicked() {
+    @objc private func saveButtonClicked() {
 
         guard let selectedDistance = choosenDistance else {
             makeAlert(title: "Uyarı", message: "Lütfen mesafe seçiniz.")

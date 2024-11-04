@@ -46,12 +46,12 @@ class HomeVC: UIViewController {
         }
     }
     
-    @objc func placemarkTapped(){
+    @objc private func placemarkTapped(){
         let placemarksVC = PlacemarksVC()
         navigationController?.pushViewController(placemarksVC, animated: true)
     }
     
-    @objc func settingsTapped(){
+    @objc private func settingsTapped(){
         let settingsVC = SettingsVC()
         navigationController?.pushViewController(settingsVC, animated: true)
     }
